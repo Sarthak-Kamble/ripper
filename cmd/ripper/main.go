@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"github.com/Sarthak-Kamble/ripper/internal/cli"
+)
 
 func main() {
-	fmt.Println("Ripper CLI")
+	cli.Execute()
 }
