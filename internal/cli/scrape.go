@@ -3,9 +3,12 @@ package cli
 import (
 	"fmt"
 
+	"github.com/Sarthak-Kamble/ripper/internal/exporter"
 	"github.com/Sarthak-Kamble/ripper/internal/scraper"
 	"github.com/spf13/cobra"
 )
+
+var jsonOutput bool
 
 var scrapeCmd = &cobra.Command{
 	Use:   "scrape [url]",
@@ -19,6 +22,22 @@ var scrapeCmd = &cobra.Command{
 		s := scraper.NewScraper()
 
 		page, err := s.Scrape(url)
+
+		if jsonOutput {
+
+			exporter := exporter.NewJSONExporter()
+
+			data, err := exporter.Export(page)
+
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			fmt.Println(string(data))
+
+			return
+		}
 
 		if err != nil {
 			fmt.Println("scrape failed:", err)
@@ -58,4 +77,5 @@ var scrapeCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(scrapeCmd)
+	scrapeCmd.Flags().BoolVar(&jsonOutput, "json", false, "output result as json")
 }
