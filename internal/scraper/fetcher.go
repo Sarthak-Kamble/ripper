@@ -2,6 +2,7 @@ package scraper
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"time"
 )
@@ -10,8 +11,7 @@ type Fetcher struct {
 	client *http.Client
 }
 
-
-// * Constructor Function
+// Constructor Function
 func NewFetcher() *Fetcher {
 	return &Fetcher{
 		client: &http.Client{
@@ -20,25 +20,27 @@ func NewFetcher() *Fetcher {
 	}
 }
 
-// * The Fetch Function
+// Fetch downloads the webpage
 func (f *Fetcher) Fetch(url string) ([]byte, string, error) {
 
 	resp, err := f.client.Get(url)
 
 	if err != nil {
-		return nil, "", fmt.Errorf("Failed Request: %w")
+		return nil, "", fmt.Errorf("failed request: %w", err)
 	}
 
 	defer resp.Body.Close()
 
-	body := make([]byte, resp.ContentLength)
 
-	_, err = resp.Body.Read(body)
+	body, err := io.ReadAll(resp.Body)
 
 	if err != nil {
-		return nil, "", fmt.Errorf("failed reading body: %w", err)
+		return nil, "", fmt.Errorf(
+			"failed reading body: %w",
+			err,
+		)
 	}
 
-	return body, resp.Status, nil
 
+	return body, resp.Status, nil
 }
