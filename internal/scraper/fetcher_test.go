@@ -6,7 +6,6 @@ import (
 	"testing"
 )
 
-
 func TestFetcherFetch(t *testing.T) {
 
 	server := httptest.NewServer(
@@ -22,17 +21,13 @@ func TestFetcherFetch(t *testing.T) {
 
 	defer server.Close()
 
-
 	fetcher := NewFetcher()
 
-
 	body, status, err := fetcher.Fetch(server.URL)
-
 
 	if err != nil {
 		t.Fatalf("expected no error, got %v", err)
 	}
-
 
 	if status != "200 OK" {
 		t.Fatalf(
@@ -40,7 +35,6 @@ func TestFetcherFetch(t *testing.T) {
 			status,
 		)
 	}
-
 
 	if string(body) != "<html><body>Hello Ripper</body></html>" {
 		t.Fatalf(

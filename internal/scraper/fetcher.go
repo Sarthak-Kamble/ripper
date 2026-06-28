@@ -31,7 +31,6 @@ func (f *Fetcher) Fetch(url string) ([]byte, string, error) {
 
 	defer resp.Body.Close()
 
-
 	body, err := io.ReadAll(resp.Body)
 
 	if err != nil {
@@ -40,7 +39,6 @@ func (f *Fetcher) Fetch(url string) ([]byte, string, error) {
 			err,
 		)
 	}
-
 
 	return body, resp.Status, nil
 }
