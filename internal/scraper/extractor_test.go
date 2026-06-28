@@ -7,7 +7,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-
 func TestExtractorExtract(t *testing.T) {
 
 	html := `
@@ -41,26 +40,21 @@ func TestExtractorExtract(t *testing.T) {
 	</html>
 	`
 
-
 	doc, err := goquery.NewDocumentFromReader(
 		strings.NewReader(html),
 	)
-
 
 	if err != nil {
 		t.Fatal(err)
 	}
 
-
 	extractor := NewExtractor()
-
 
 	page := extractor.Extract(
 		doc,
 		"https://test.com",
 		"200 OK",
 	)
-
 
 	if page.Title != "Ripper Page" {
 		t.Fatalf(
@@ -69,14 +63,12 @@ func TestExtractorExtract(t *testing.T) {
 		)
 	}
 
-
 	if len(page.Links) != 2 {
 		t.Fatalf(
 			"expected 2 links got %d",
 			len(page.Links),
 		)
 	}
-
 
 	if len(page.Headings) != 2 {
 		t.Fatalf(
