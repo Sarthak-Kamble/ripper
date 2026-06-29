@@ -1,10 +1,11 @@
 APP_NAME=ripper
+VERSION ?= dev
 
 build:
-	go build -o bin/$(APP_NAME) ./cmd/ripper
+	go build -ldflags "-X github.com/Sarthak-Kamble/ripper/internal/cli.Version=$(VERSION)" -o bin/$(APP_NAME).exe ./cmd/ripper
 
 install:
-	go install ./cmd/ripper/
+	go install ./cmd/ripper
 
 run:
 	go run ./cmd/ripper
@@ -13,4 +14,4 @@ test:
 	go test ./...
 
 clean:
-	rm -rf bin
+	rmdir /s /q bin
