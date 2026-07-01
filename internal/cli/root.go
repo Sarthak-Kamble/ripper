@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Sarthak-Kamble/ripper/internal/cli/commands"
 	"github.com/spf13/cobra"
 )
+
 
 var rootCmd = &cobra.Command{
 	Use:   "ripper",
@@ -14,6 +16,16 @@ var rootCmd = &cobra.Command{
 		cmd.Help()
 	},
 }
+
+
+func init() {
+
+	commands.Register(
+		rootCmd,
+	)
+
+}
+
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
